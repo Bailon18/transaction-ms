@@ -11,13 +11,13 @@ spring:
       uri: mongodb://mongo:VLvbBYdfrMtSyFsDBKMkcLerUMBqczVe@junction.proxy.rlwy.net:48114/bootcamp
 
 # Configuración de SpringDoc para OpenAPI y Swagger UI
-springdoc:
-  api-docs:
-    path: /v3/api-docs
-  swagger-ui:
-    path: /swagger-ui.html
-    display-request-duration: true
-    url: /openapi.yaml
+#springdoc:
+#  api-docs:
+#    path: /v3/api-docs
+#  swagger-ui:
+#    path: /swagger-ui.html
+#    display-request-duration: true
+#    url: /openapi.yaml
 
 # configuracion de eureka
 eureka:
