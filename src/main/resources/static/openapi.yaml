@@ -1,0 +1,234 @@
+openapi: 3.0.0
+info:
+  title: Microservicio de Transacciones Bancarias
+  description: Microservicio para gestionar transacciones bancarias como depósitos, retiros y transferencias.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8084/api
+    description: Servidor local
+
+paths:
+  /transacciones/deposito:
+    post:
+      summary: Registrar un depósito en una cuenta
+      description: Permite registrar un nuevo depósito en la cuenta de un cliente.
+      tags:
+        - Transacciones
+      operationId: registrarDeposito
+      parameters:
+        - name: cuentaDestino
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Número de cuenta de destino para el depósito.
+        - name: monto
+          in: query
+          required: true
+          schema:
+            type: number
+            format: double
+          description: Monto a depositar en la cuenta.
+      responses:
+        '201':
+          description: Depósito registrado exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionResponse'
+        '400':
+          description: Error en la solicitud, verifique los datos enviados.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Error interno del servidor.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /transacciones/retiro:
+    post:
+      summary: Registrar un retiro desde una cuenta
+      description: Permite registrar un retiro desde la cuenta de un cliente, si el saldo es suficiente.
+      tags:
+        - Transacciones
+      operationId: registrarRetiro
+      parameters:
+        - name: cuentaOrigen
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Número de cuenta de origen desde la cual se hará el retiro.
+        - name: monto
+          in: query
+          required: true
+          schema:
+            type: number
+            format: double
+          description: Monto a retirar de la cuenta.
+      responses:
+        '201':
+          description: Retiro registrado exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionResponse'
+        '400':
+          description: Fondos insuficientes o error en la solicitud.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Error interno del servidor.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /transacciones/transferencia:
+    post:
+      summary: Registrar una transferencia entre cuentas
+      description: Permite registrar una transferencia de dinero entre dos cuentas de clientes.
+      tags:
+        - Transacciones
+      operationId: registrarTransferencia
+      parameters:
+        - name: cuentaOrigen
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Número de cuenta de origen desde la cual se transferirá el dinero.
+        - name: cuentaDestino
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Número de cuenta de destino a la cual se transferirá el dinero.
+        - name: monto
+          in: query
+          required: true
+          schema:
+            type: number
+            format: double
+          description: Monto a transferir entre las cuentas.
+      responses:
+        '201':
+          description: Transferencia registrada con éxito.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionResponse'
+        '400':
+          description: Error en la solicitud, verifique los datos enviados.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Error interno del servidor.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /transacciones/historial:
+    get:
+      summary: Obtener historial de transacciones
+      description: Devuelve el historial completo de transacciones realizadas en el sistema.
+      tags:
+        - Historial
+      operationId: obtenerHistorial
+      responses:
+        '200':
+          description: Historial de transacciones obtenido con éxito.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionResponseList'
+        '404':
+          description: No se encontró ningún historial de transacciones.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Error interno del servidor.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    Transaccion:
+      type: object
+      description: Representa los datos de una transacción bancaria como se almacena en la base de datos.
+      properties:
+        id:
+          type: string
+          description: Identificador único de la transacción.
+        tipo:
+          type: string
+          description: Tipo de la transacción (DEPÓSITO, RETIRO, TRANSFERENCIA).
+        monto:
+          type: number
+          format: double
+          description: Monto de la transacción.
+        fecha:
+          type: string
+          format: date
+          description: Fecha de la transacción.
+        cuentaOrigen:
+          type: string
+          description: Número de cuenta de origen (solo para retiros y transferencias).
+        cuentaDestino:
+          type: string
+          description: Número de cuenta de destino (solo para depósitos y transferencias).
+
+    TransactionResponse:
+      type: object
+      description: DTO para transferir datos de las transacciones.
+      properties:
+        id:
+          type: string
+          description: Identificador único de la transacción.
+        tipo:
+          type: string
+          description: Tipo de la transacción (DEPÓSITO, RETIRO, TRANSFERENCIA).
+        monto:
+          type: number
+          format: double
+          description: Monto de la transacción.
+        fecha:
+          type: string
+          format: date
+          description: Fecha de la transacción.
+        cuentaOrigen:
+          type: string
+          description: Número de cuenta de origen.
+        cuentaDestino:
+          type: string
+          description: Número de cuenta de destino.
+
+    TransactionResponseList:
+      type: array
+      description: Lista de objetos `TransactionResponse`.
+      items:
+        $ref: '#/components/schemas/TransactionResponse'
+
+    ErrorResponse:
+      type: object
+      description: Estructura estándar para indicar un error en las respuestas.
+      properties:
+        status:
+          type: integer
+          description: Código de error.
+        message:
+          type: string
+          description: Mensaje detallado del error ocurrido.
