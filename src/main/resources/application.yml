@@ -8,7 +8,7 @@ spring:
 
   data:
     mongodb:
-      uri: mongodb://mongo:VLvbBYdfrMtSyFsDBKMkcLerUMBqczVe@junction.proxy.rlwy.net:48114/test
+      uri: mongodb://mongo:VLvbBYdfrMtSyFsDBKMkcLerUMBqczVe@junction.proxy.rlwy.net:48114/test?authSource=admin
 
 # Configuración de SpringDoc para OpenAPI y Swagger UI
 springdoc:
@@ -32,3 +32,7 @@ eureka:
     hostname: transaction-ms-production.up.railway.app
     # Descomentar la siguiente línea para trabajar localmente:
     #hostname: localhost
+
+openapi:
+  microservicioDeTransaccionesBancarias:
+    base-path: ""
