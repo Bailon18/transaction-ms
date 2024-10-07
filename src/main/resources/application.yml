@@ -1,5 +1,5 @@
-server:
-  port: 8084
+#server:
+#  port: 8084
 spring:
   application:
     name: TRANSACCION-MS
@@ -23,10 +23,12 @@ springdoc:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: https://euraka-server-production.up.railway.app/eureka/
+      #Descomentar la siguiente línea para trabajar localmente:
+      #defaultZone: http://localhost:8761/eureka/
 
   instance:
     prefer-ip-address: false
-    #hostname: customer-ms-production.up.railway.app
-    # Descomentar la siguiente linea para trabajar localmente:
-    hostname: localhost
+    hostname: transaction-ms-production.up.railway.app
+    # Descomentar la siguiente línea para trabajar localmente:
+    #hostname: localhost
