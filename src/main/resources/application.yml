@@ -8,7 +8,7 @@ spring:
 
   data:
     mongodb:
-      uri: mongodb://mongo:VLvbBYdfrMtSyFsDBKMkcLerUMBqczVe@junction.proxy.rlwy.net:48114/bootcamp
+      uri: mongodb://mongo:VLvbBYdfrMtSyFsDBKMkcLerUMBqczVe@junction.proxy.rlwy.net:48114/test
 
 # Configuración de SpringDoc para OpenAPI y Swagger UI
 springdoc:
