@@ -24,14 +24,14 @@ eureka:
   client:
     service-url:
       defaultZone: https://euraka-server-production.up.railway.app/eureka/
-      #Descomentar la siguiente línea para trabajar localmente:
-      #defaultZone: http://localhost:8761/eureka/
+      # Descomentar la siguiente línea para trabajar localmente:
+      # defaultZone: http://localhost:8761/eureka/
 
   instance:
     prefer-ip-address: false
     hostname: transaction-ms-production.up.railway.app
     # Descomentar la siguiente línea para trabajar localmente:
-    #hostname: localhost
+    # hostname: localhost
 
 openapi:
   microservicioDeTransaccionesBancarias:

@@ -4,8 +4,11 @@ info:
   description: Microservicio para gestionar transacciones bancarias como depósitos, retiros y transferencias.
   version: 1.0.0
 servers:
+  -
   - url: https://transaction-ms-production.up.railway.app
     description: Servidor de producción
+  - url: http://localhost:8084
+    description: Servidor local
 
 paths:
   /transacciones/deposito:

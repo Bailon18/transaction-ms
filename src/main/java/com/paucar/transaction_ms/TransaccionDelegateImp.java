@@ -4,19 +4,17 @@ import com.paucar.transaction_ms.business.TransaccionesService;
 
 import com.paucar.transaction_ms.api.TransaccionesApiDelegate;
 import com.paucar.transaction_ms.model.TransactionResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class TransaccionDelegateImp implements TransaccionesApiDelegate {
 
     private final TransaccionesService transaccionesService;
-
-    public TransaccionDelegateImp( TransaccionesService transaccionesService){
-        this.transaccionesService = transaccionesService;
-    }
 
     @Override
     public ResponseEntity<List<TransactionResponse>> obtenerHistorial() {
